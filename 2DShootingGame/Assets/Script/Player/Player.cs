@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     [Header("플레이어 스탯 관련")]
     [SerializeField] float speed;
-    [SerializeField] float hp;
+    [SerializeField] public float hp;
     [SerializeField] int power;
 
     [Header("플레이어 슛 딜레이")]
@@ -17,9 +17,12 @@ public class Player : MonoBehaviour
 
     [Header("매니져 관련")]
     [SerializeField] ObjectManager objMana;
+    [SerializeField] GameManager gameMana;
 
     [SerializeField] bool isHit;
+    [SerializeField] bool isMZ;
 
+    Coroutine coru;
     Animator ani;
     SpriteRenderer spri;
 
@@ -175,6 +178,31 @@ public class Player : MonoBehaviour
         isHit = false;
     }
 
+    void ReturnColor2()
+    {
+        spri.color = new Color(1, 1, 1, 1);
+    }
+
+    IEnumerator MZ()
+    {
+        isMZ = true;
+        OnHitEffect();
+        yield return new WaitForSeconds(2.5f);
+        ReturnColor2();
+        yield return new WaitForSeconds(0.1f);
+        OnHitEffect();
+        yield return new WaitForSeconds(0.1f);
+        ReturnColor2();
+        yield return new WaitForSeconds(0.1f);
+        OnHitEffect();
+        yield return new WaitForSeconds(0.1f);
+        ReturnColor2();
+        yield return new WaitForSeconds(0.05f);
+        OnHitEffect();
+        yield return new WaitForSeconds(0.05f);
+        ReturnColor();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isHit)
@@ -189,6 +217,46 @@ public class Player : MonoBehaviour
                 Enemys enemy = collision.gameObject.GetComponent<Enemys>();
                 OnHit(enemy.dmg / 2);
             }
+        }
+
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            Items item = collision.gameObject.GetComponent<Items>();
+            switch (item.name)
+            {
+                case "Coin":
+                    gameMana.score += 300;
+                    break;
+                case "HP":
+                    hp += 5;
+                    break;
+                case "Power":
+                    if(power >= 5)
+                    {
+                        power = 5;
+                        gameMana.score += 200;
+                    }
+                    else
+                    {
+                        power++;
+                    }
+                    break;
+                case "MZItem":
+                    if (!isMZ)
+                    {
+                        coru = StartCoroutine("MZ");
+                    }
+                    else if (isMZ)
+                    {
+                        StopCoroutine(coru);
+                        coru = StartCoroutine("MZ");
+                    }
+                    break;
+                case "SickDown":
+                    gameMana.curSick -= 10;
+                    break;
+            }
+            collision.gameObject.SetActive(false);
         }
     }
 }

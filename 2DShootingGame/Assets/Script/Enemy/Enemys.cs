@@ -16,10 +16,12 @@ public class Enemys : MonoBehaviour
     ObjectManager objMana;
     SpriteRenderer spri;
     Transform playerT;
+    GameManager gameMana;
 
 
     private void Awake()
     {
+        gameMana = GameObject.Find("GameManager").gameObject.GetComponent<GameManager>();
         playerT = GameObject.Find("Player").transform;
         objMana = GameObject.Find("ObjectManager").gameObject.GetComponent<ObjectManager>();
         spri = GetComponent<SpriteRenderer>();
@@ -131,6 +133,7 @@ public class Enemys : MonoBehaviour
         {
             gameObject.transform.rotation = Quaternion.identity;
             //gameManager에 스코어 추가하기
+            gameMana.score += score;
             gameObject.SetActive(false);
         }
     }
@@ -162,6 +165,7 @@ public class Enemys : MonoBehaviour
         if (collision.gameObject.CompareTag("Border"))
         {
             gameObject.transform.rotation = Quaternion.identity;
+            gameMana.curSick += 5;
             gameObject.SetActive(false);
         }
     }

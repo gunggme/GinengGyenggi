@@ -14,9 +14,11 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] string[] names;
 
+    public bool bossOn;
+
     private void Awake()
     {
-        names = new string[] { "EnemyS", "EnemyS", "EnemySs", "EnemyS", "EnemyM", "EnemyL"};
+        names = new string[] { "EnemyS", "EnemyS", "RedCell", "EnemySs", "WhiteCell", "EnemyS", "EnemyM", "WhiteCell", "EnemyL"};
     }
 
     private void Update()
@@ -26,15 +28,18 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnReady()
     {
-        if(curDelay < nextDelay)
+        if (!bossOn)
         {
-            curDelay += Time.deltaTime;
-            return;
-        }
+            if (curDelay < nextDelay)
+            {
+                curDelay += Time.deltaTime;
+                return;
+            }
 
-        nextDelay = Random.Range(0.5f, 1.5f);
-        Spawn();
-        curDelay = 0;
+            nextDelay = Random.Range(0.5f, 1.5f);
+            Spawn();
+            curDelay = 0;
+        }
     }
 
     void Spawn()
@@ -49,6 +54,19 @@ public class SpawnManager : MonoBehaviour
         {
             Enemys enemy = obj.GetComponent<Enemys>();
             speed = enemy.speed;
+        }
+        if (obj.CompareTag("NPC"))
+        {
+            if(obj.name == "WhiteCell(Clone)")
+            {
+                WhiteCell white = obj.GetComponent<WhiteCell>();
+                speed = white.speed;
+            }
+            if(obj.name == "RedCell(Clone)")
+            {
+                RedCell red = obj.GetComponent<RedCell>();
+                speed = red.speed;
+            }
         }
 
         if(randomTransfrom == 5 || randomTransfrom == 6)
