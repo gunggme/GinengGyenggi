@@ -18,13 +18,17 @@ public class Player : MonoBehaviour
     [Header("매니져 관련")]
     [SerializeField] ObjectManager objMana;
 
+    [SerializeField] bool isHit;
+
     Animator ani;
+    SpriteRenderer spri;
 
     private void Awake()
     {
         maxDelay = 0.3f;
-        //animator 컴포넌트 불러오기
+        //컴포넌트 불러오기
         ani = GetComponent<Animator>();
+        spri = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -142,5 +146,49 @@ public class Player : MonoBehaviour
         }
 
         curDelay= 0;
+    }
+
+    void OnHit(float dmg)
+    {
+        hp -= dmg;
+
+        OnHitEffect();
+        Invoke("ReturnColor", 1.5f);
+
+        if(hp <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    void OnHitEffect()
+    {
+        spri.color = new Color(1, 1, 1, 0.4f);
+        gameObject.layer = 9;
+        isHit = true;
+    }
+
+    void ReturnColor()
+    {
+        spri.color = new Color(1, 1, 1, 1);
+        gameObject.layer = 8;
+        isHit = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isHit)
+        {
+            if (collision.gameObject.CompareTag("EnemyBullet"))
+            {
+                Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+                OnHit(bullet.dmg);
+            }
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                Enemys enemy = collision.gameObject.GetComponent<Enemys>();
+                OnHit(enemy.dmg / 2);
+            }
+        }
     }
 }
