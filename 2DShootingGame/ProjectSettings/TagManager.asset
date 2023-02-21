@@ -20,14 +20,14 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - PlayerHit
+  - PlayerBullet
+  - Item
+  - Enemy
+  - EnemyBullet
+  - Boss
+  - BossBullet
   - 
   - 
   - 
