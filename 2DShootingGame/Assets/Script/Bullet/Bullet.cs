@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        if (gameObject.CompareTag("EnemyBullet"))
+        if (gameObject.CompareTag("EnemyBullet") || gameObject.CompareTag("BossBullet"))
         {
             if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("PlayerBullet") || collision.gameObject.CompareTag("BossBullet") || collision.gameObject.CompareTag("Item"))
                 return;

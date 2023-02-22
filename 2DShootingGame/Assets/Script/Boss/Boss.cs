@@ -33,6 +33,7 @@ public class Boss : MonoBehaviour
 
     private void OnEnable()
     {
+        transform.position = new Vector3(0, 5, 0);
         isMove = true;
         spawnMana.bossOn = true;
         hp = 1000;
@@ -209,6 +210,10 @@ public class Boss : MonoBehaviour
 
         if(hp <= 0)
         {
+            CancelInvoke();
+            spawnMana.bossOn = false;
+            gameMana.bossTimer = 0;
+            gameMana.StageEnd();
             gameObject.SetActive(false);
         }
     }

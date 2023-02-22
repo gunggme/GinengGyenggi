@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -23,11 +24,20 @@ public class GameManager : MonoBehaviour
 
     [Header("보스 관련")]
     [SerializeField] GameObject bossObject;
-    [SerializeField] float bossTimer;
+    [SerializeField] public float bossTimer;
+
+    [Header("스테이지 관련")]
+    [SerializeField] GameObject fadeOut;
+    [SerializeField] Text stageText;
+    [SerializeField] int stageNum;
 
 
     private void Awake()
     {
+        Invoke("FadeOutOn", 0.5f);
+        Invoke("FadeOutOff", 0.8f);
+        stageNum = 1;
+        StageStart();
         maxSick = 100;
         maxPlayerHP = playerS.hp;
     }
@@ -38,6 +48,62 @@ public class GameManager : MonoBehaviour
         SetHP();
         SetSick();
         BossTime();
+    }
+
+
+    void StageStart()
+    {
+        stageText.text = "Stage " + stageNum + "\nStart!";
+        stageText.gameObject.SetActive(true);
+
+        playerS.power = 1;
+        playerS.hp = 30;
+
+        if(stageNum == 1)
+        {
+            curSick = 10;
+        }
+        else if(stageNum == 2)
+        {
+            curSick = 20;
+        }
+        Invoke("StageTextOff", 1);
+    }
+
+    void StageTextOff()
+    {
+        stageText.gameObject.SetActive(false);
+    }
+
+    public void StageEnd()
+    {
+        stageText.text = "Stage " + stageNum + "\nOver!";
+        stageText.gameObject.SetActive(true);
+        stageNum++;
+        
+        Invoke("StageTextOff", 1);
+        if (stageNum >= 3)
+        {
+            Invoke("GameOver", 1.2f);
+            return;
+        }
+        Invoke("StageStart", 1.5f);
+    }
+
+    void GameOver()
+    {
+        PlayerPrefs.SetInt("Score", score);
+        SceneManager.LoadScene(2);
+    }
+
+    void FadeOutOn()
+    {
+        fadeOut.gameObject.SetActive(true);
+    }
+
+    void FadeOutOff()
+    {
+        fadeOut.gameObject.SetActive(false);
     }
 
     void SetScore()
@@ -71,7 +137,11 @@ public class GameManager : MonoBehaviour
     {
         if(bossTimer < 80)
         {
+            bossTimer += Time.deltaTime;
             bossObject.SetActive(false);
+            return;
         }
+
+        bossObject.SetActive(true);
     }
 }

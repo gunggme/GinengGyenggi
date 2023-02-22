@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [Header("플레이어 스탯 관련")]
     [SerializeField] float speed;
     [SerializeField] public float hp;
-    [SerializeField] int power;
+    [SerializeField] public int power;
 
     [Header("플레이어 슛 딜레이")]
     [SerializeField] float curDelay;
@@ -207,7 +207,7 @@ public class Player : MonoBehaviour
     {
         if (!isHit)
         {
-            if (collision.gameObject.CompareTag("EnemyBullet"))
+            if (collision.gameObject.CompareTag("EnemyBullet") || collision.gameObject.CompareTag("BossBullet"))
             {
                 Bullet bullet = collision.gameObject.GetComponent<Bullet>();
                 OnHit(bullet.dmg);
