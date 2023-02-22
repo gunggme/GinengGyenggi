@@ -48,6 +48,11 @@ public class GameManager : MonoBehaviour
         SetHP();
         SetSick();
         BossTime();
+
+        if(curSick >= 100)
+        {
+            GameOver();
+        }
     }
 
 
@@ -78,6 +83,7 @@ public class GameManager : MonoBehaviour
     public void StageEnd()
     {
         stageText.text = "Stage " + stageNum + "\nOver!";
+        score += (int)playerS.hp * 100 - (int)curSick * 30;
         stageText.gameObject.SetActive(true);
         stageNum++;
         
@@ -90,7 +96,7 @@ public class GameManager : MonoBehaviour
         Invoke("StageStart", 1.5f);
     }
 
-    void GameOver()
+    public void GameOver()
     {
         PlayerPrefs.SetInt("Score", score);
         SceneManager.LoadScene(2);

@@ -7,55 +7,83 @@ public class GameOverPage : MonoBehaviour
 {
     [Header("스코어 텍스트")]
     [SerializeField] Text scoreText;
-    [SerializeField] Text maxScore;
-    [SerializeField] int maxScore1 = 0;
-    [SerializeField] int curScore;
+    [SerializeField] Text[] maxScore;
     [SerializeField] InputField inputName;
-    [SerializeField] string maxPlayerName;
+    [SerializeField] string playerName;
+    [SerializeField] float curScore;
+
+    //베스트 스코어
+    private float[] bestScore = new float[5];
+    private string[] bestName = new string[5];
+
 
     private void Awake()
     {
-        //curScore에 Score저장
-        curScore = PlayerPrefs.GetInt("Score");
-        //만약 curScore가 maxScore1보다 크다면?
-        if (curScore > maxScore1)
+        scoreText.text = "Score : " + curScore;
+        inputName.gameObject.SetActive(true);
+
+        for(int i = 0; i < 5; i++)
         {
-            //이름 적는곳 활성화
-            inputName.gameObject.SetActive(true);
-            //MaxScore이름을 가진 PlayerPrefs에다 curScore을 저장
-            PlayerPrefs.SetInt("MaxScore", curScore);
+            maxScore[i].text = i + 1 + PlayerPrefs.GetString(i.ToString() + "BestName") + "\nScore : " + PlayerPrefs.GetFloat(i + "BestScore");
         }
-        //만약 MaxScore이름을 가진 Key가 있다면
-        if (PlayerPrefs.HasKey("MaxScore"))
-        {
-            //플레이어 프렙스 전체 저장
-            PlayerPrefs.Save();
-            //maxScore1에다 MaxScore을 저장한다.
-            maxScore1 = PlayerPrefs.GetInt("MaxScore");
-            //만약 maxScore1이 0이라면 0으로 저장하고 빠져나온다. 
-            if (maxScore1 == 0)
-            {
-                maxScore1 = 0;
-                return;
-            }
-            return;
-        }
-            
-        
-        
     }
 
-    private void Start()
+    private void Update()
     {
-        //scoreText에다가 Score : 현재 점수를 저장
-        scoreText.text = "Score : " + curScore;
-        maxPlayerName = PlayerPrefs.GetString("MaxScorePlayerName");
-        if (maxPlayerName == null)
+        if (inputName.gameObject.activeSelf || playerName.Length > 0 || Input.GetKey(KeyCode.Return))
         {
-            maxPlayerName = "Null";
+            InputNames();
         }
-        maxScore.text = maxPlayerName + "\nMax Score : " + maxScore1;
     }
+
+    void InputNames()
+    {
+        playerName = inputName.text;
+        inputName.gameObject.SetActive(false);
+        ScoreSet(curScore, playerName);
+    }
+
+    /*1등 > 2등 > 3등 > 4등 > 5등*/
+
+    void ScoreSet(float curScore, string curName)
+    {
+        //PlayerPrefs에 현재 저장시작
+        PlayerPrefs.SetString("CurPlayerName", curName);
+        PlayerPrefs.SetFloat("CurPlayerScore", curScore);
+
+        float tmpScore = 0;
+        string tmpName = "";
+
+        for(int i = 0; i < 5; i++)
+        {
+            bestScore[i] = PlayerPrefs.GetFloat(i + "BestScore");
+            bestName[i] = PlayerPrefs.GetString(i + "BestName");
+
+            while (bestScore[i] < curScore)
+            {
+                //자리 바꾸기
+                tmpScore = bestScore[i];
+                tmpName = bestName[i];
+                bestScore[i] = curScore;
+                bestName[i] = curName;
+
+                PlayerPrefs.SetFloat(i + "BestScore", curScore);
+                PlayerPrefs.SetString(i.ToString() + "BestName", curName);
+
+                //준비
+                curScore = tmpScore;
+                curName = tmpName;
+            }
+        }
+
+        for(int i = 0; i < 5; i++)
+        {
+            PlayerPrefs.SetFloat(i + "BestScore", bestScore[i]);
+            PlayerPrefs.SetString(i.ToString() + "BestName", bestName[i]);
+        }
+    }
+
+    
 
 
 

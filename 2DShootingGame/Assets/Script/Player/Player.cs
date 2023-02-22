@@ -38,6 +38,14 @@ public class Player : MonoBehaviour
     {
         Move();
         Shot();
+        if (power >= 5)
+        {
+            power = 5;
+        }
+        if(power <= 1)
+        {
+            power = 1;
+        }
     }
 
     //움직이는 모션과 움직이는 함수
@@ -160,6 +168,7 @@ public class Player : MonoBehaviour
 
         if(hp <= 0)
         {
+            gameMana.GameOver();
             gameObject.SetActive(false);
         }
     }

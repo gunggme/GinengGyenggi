@@ -19,4 +19,9 @@ public class MainButtons : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
+
+    void GameQuit()
+    {
+        Application.Quit();
+    }
 }

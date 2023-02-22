@@ -94,6 +94,36 @@ public class SpawnManager : MonoBehaviour
             int randomTransfrom = Random.Range(0, spawnTransform.Length - 1);
             GameObject obj = objMana.MakeObj(names[4]);
             obj.transform.position = spawnTransform[randomTransfrom].position;
+            if (obj.CompareTag("NPC"))
+            {
+                if (obj.name == "WhiteCell(Clone)")
+                {
+                    WhiteCell white = obj.GetComponent<WhiteCell>();
+                    speed = white.speed;
+                }
+                if (obj.name == "RedCell(Clone)")
+                {
+                    RedCell red = obj.GetComponent<RedCell>();
+                    speed = red.speed;
+                }
+            }
+
+            Rigidbody2D rigid = obj.GetComponent<Rigidbody2D>();
+
+            if (randomTransfrom == 5 || randomTransfrom == 6)
+            {
+                obj.transform.Rotate(Vector3.back * 90);
+                rigid.velocity = new Vector2(speed * (-1), -1);
+            }
+            else if (randomTransfrom == 7 || randomTransfrom == 8)
+            {
+                obj.transform.Rotate(Vector3.forward * 90);
+                rigid.velocity = new Vector2(speed, -1);
+            }
+            else
+            {
+                rigid.velocity = new Vector2(0, speed * (-1));
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.O))
@@ -101,6 +131,36 @@ public class SpawnManager : MonoBehaviour
             int randomTransfrom = Random.Range(0, spawnTransform.Length - 1);
             GameObject obj = objMana.MakeObj(names[2]);
             obj.transform.position = spawnTransform[randomTransfrom].position;
+            if (obj.CompareTag("NPC"))
+            {
+                if (obj.name == "WhiteCell(Clone)")
+                {
+                    WhiteCell white = obj.GetComponent<WhiteCell>();
+                    speed = white.speed;
+                }
+                if (obj.name == "RedCell(Clone)")
+                {
+                    RedCell red = obj.GetComponent<RedCell>();
+                    speed = red.speed;
+                }
+            }
+
+            Rigidbody2D rigid = obj.GetComponent<Rigidbody2D>();
+
+            if (randomTransfrom == 5 || randomTransfrom == 6)
+            {
+                obj.transform.Rotate(Vector3.back * 90);
+                rigid.velocity = new Vector2(speed * (-1), -1);
+            }
+            else if (randomTransfrom == 7 || randomTransfrom == 8)
+            {
+                obj.transform.Rotate(Vector3.forward * 90);
+                rigid.velocity = new Vector2(speed, -1);
+            }
+            else
+            {
+                rigid.velocity = new Vector2(0, speed * (-1));
+            }
         }
     }
 }
