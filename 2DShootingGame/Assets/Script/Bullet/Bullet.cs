@@ -7,6 +7,16 @@ public class Bullet : MonoBehaviour
     //총알의 데미지
     public float dmg;
 
+    [SerializeField] bool isRotation;
+
+    private void Update()
+    {
+        if (isRotation)
+        {
+            transform.Rotate(0, 0, 1);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (gameObject.CompareTag("PlayerBullet"))

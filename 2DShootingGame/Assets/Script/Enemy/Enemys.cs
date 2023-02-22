@@ -49,7 +49,14 @@ public class Enemys : MonoBehaviour
                 hp = 10;
                 dmg = 10;
                 score = 400;
+                speed = 7;
+                break;
+            case "EnemyMs":
+                hp = 10;
+                dmg = 10;
+                score = 400;
                 speed = 10;
+                maxDelay = 0.7f;
                 break;
             case "EnemyL":
                 hp = 15;
@@ -99,6 +106,20 @@ public class Enemys : MonoBehaviour
             Rigidbody2D rigidSs = dirSs.GetComponent<Rigidbody2D>();
 
             rigidSs.AddForce(dirSsT.normalized * 5, ForceMode2D.Impulse);
+        }
+        else if (name == "EnemyMs")
+        {
+            GameObject dirR = objMana.MakeObj("EnemyBullet2");
+
+            dirR.transform.position = transform.position;
+
+            dirR.GetComponent<Bullet>().dmg = dmg;
+
+            Vector3 dirLT = playerT.position - transform.position;
+
+            Rigidbody2D rigidL1 = dirR.GetComponent<Rigidbody2D>();
+
+            rigidL1.AddForce(dirLT.normalized * 5, ForceMode2D.Impulse);
         }
         else if(name == "EnemyL")
         {

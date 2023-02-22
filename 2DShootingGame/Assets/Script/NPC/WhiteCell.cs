@@ -12,7 +12,7 @@ public class WhiteCell : MonoBehaviour
     private void Awake()
     {
         objMana = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();
-        items = new string[] { "HP", "Coin", "Power", "MZItem", "SickDown" };
+        items = new string[] { "HP", "Coin", "Power", "MZItem", "SickDown", "Boom" };
     }
 
     void DropItem()

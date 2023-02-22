@@ -58,9 +58,9 @@ public class Boss : MonoBehaviour
 
     void Think()
     {
-        curSkillIndex = Random.Range(0, 4);
+        curSkillIndex = Random.Range(0, 5);
         totalSkillNum = 0;
-        maxSkillNum = Random.Range(3, 6);
+        maxSkillNum = Random.Range(4, 7);
 
         switch (curSkillIndex)
         {
@@ -77,6 +77,9 @@ public class Boss : MonoBehaviour
                 Invoke("ArkShot", 1f);
                 break;
             case 4:
+                Invoke("EnemyOn", 1f);
+                break;
+            case 5:
                 Think();
                 break;
         }
@@ -200,6 +203,18 @@ public class Boss : MonoBehaviour
         {
             Invoke("Think", 1f);
         }
+    }
+
+    void EnemyOn()
+    {
+        spawnMana.bossOn = false;
+        Invoke("Think", 1f);
+        Invoke("EnemyOff", 10);
+    }
+
+    void EnemyOff()
+    {
+        spawnMana.bossOn = true;
     }
 
     public void OnHit(float dmg)

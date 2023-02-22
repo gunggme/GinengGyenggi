@@ -19,6 +19,7 @@ public class GameOverPage : MonoBehaviour
 
     private void Awake()
     {
+        curScore = PlayerPrefs.GetInt("Score");
         scoreText.text = "Score : " + curScore;
         inputName.gameObject.SetActive(true);
 
@@ -30,7 +31,7 @@ public class GameOverPage : MonoBehaviour
 
     private void Update()
     {
-        if (inputName.gameObject.activeSelf || playerName.Length > 0 || Input.GetKey(KeyCode.Return))
+        if (playerName.Length > 0 || Input.GetKey(KeyCode.Return))
         {
             InputNames();
         }

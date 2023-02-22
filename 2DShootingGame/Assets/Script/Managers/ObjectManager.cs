@@ -10,10 +10,12 @@ public class ObjectManager : MonoBehaviour
     [SerializeField] GameObject HPPrefab;
     [SerializeField] GameObject MZItemPrefab;
     [SerializeField] GameObject sickDownPrefab;
+    [SerializeField] GameObject boomPrefab;
     //Enemys Prefab
     [SerializeField] GameObject enemySPrefab;
     [SerializeField] GameObject enemySsPrefab;
     [SerializeField] GameObject enemyMPrefab;
+    [SerializeField] GameObject enemyMsPrefab;
     [SerializeField] GameObject enemyLPrefab;
     //NPC
     [SerializeField] GameObject whiteCellPrefab;
@@ -34,10 +36,12 @@ public class ObjectManager : MonoBehaviour
     GameObject[] Power;
     GameObject[] MZItem;
     GameObject[] sickDown;
+    GameObject[] boom;
     //Enemy
     GameObject[] enemyS;
     GameObject[] enemySs;
     GameObject[] enemyM;
+    GameObject[] enemyMs;
     GameObject[] enemyL;
     //NPC
     GameObject[] whiteCell;
@@ -64,10 +68,12 @@ public class ObjectManager : MonoBehaviour
         HP = new GameObject[10];
         MZItem = new GameObject[10];
         sickDown = new GameObject[10];
+        boom = new GameObject[10];
         //Enemy 배열 초기화
         enemyS = new GameObject[20];
         enemySs = new GameObject[20];
         enemyM = new GameObject[20];
+        enemyMs = new GameObject[20];
         enemyL = new GameObject[20];
         //NPC 배열 초기화
         whiteCell = new GameObject[20];
@@ -115,6 +121,11 @@ public class ObjectManager : MonoBehaviour
             sickDown[i] = Instantiate(sickDownPrefab);
             sickDown[i].gameObject.SetActive(false);
         }
+        for(int i = 0; i < boom.Length; i++)
+        {
+            boom[i] = Instantiate(boomPrefab);
+            boom[i].gameObject.SetActive(false);
+        }
         //Enemy 배열 크기에 맞게 프리팹 생성
         for(int i = 0; i < enemyS.Length; i++)
         {
@@ -130,6 +141,11 @@ public class ObjectManager : MonoBehaviour
         {
             enemyM[i] = Instantiate(enemyMPrefab);
             enemyM[i].gameObject.SetActive(false);
+        }
+        for(int i = 0; i < enemyMs.Length; i++)
+        {
+            enemyMs[i] = Instantiate(enemyMsPrefab);
+            enemyMs[i].gameObject.SetActive(false);
         }
         for(int i = 0; i < enemyL.Length; i++)
         {
@@ -204,6 +220,9 @@ public class ObjectManager : MonoBehaviour
             case "SickDown":
                 targetPool = sickDown;
                 break;
+            case "Boom":
+                targetPool = boom;
+                break;
             //Enemy
             case "EnemyS":
                 targetPool = enemyS;
@@ -213,6 +232,9 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "EnemyM":
                 targetPool = enemyM;
+                break;
+            case "EnemyMs":
+                targetPool = enemyMs;
                 break;
             case "EnemyL":
                 targetPool = enemyL;

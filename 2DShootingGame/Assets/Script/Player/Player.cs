@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
     [SerializeField] bool isHit;
     [SerializeField] bool isMZ;
 
+    [Header("ºÕ!")]
+    [SerializeField] GameObject bom;
+
     Coroutine coru;
     Animator ani;
     SpriteRenderer spri;
@@ -170,7 +173,7 @@ public class Player : MonoBehaviour
         {
             gameMana.GameOver();
             gameObject.SetActive(false);
-        }
+        }   
     }
 
     public void OnHitEffect()
@@ -190,6 +193,10 @@ public class Player : MonoBehaviour
     void ReturnColor2()
     {
         spri.color = new Color(1, 1, 1, 1);
+    }
+    void BomOff()
+    {
+        bom.gameObject.SetActive(false);
     }
 
     IEnumerator MZ()
@@ -264,8 +271,14 @@ public class Player : MonoBehaviour
                 case "SickDown":
                     gameMana.curSick -= 10;
                     break;
+                case "Boom":
+                    bom.gameObject.SetActive(true);
+                    Invoke("BomOff", 0.5f);
+                    break;
             }
             collision.gameObject.SetActive(false);
         }
+
+        
     }
 }
