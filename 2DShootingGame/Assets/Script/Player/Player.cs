@@ -164,14 +164,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnHitEffect()
+    public void OnHitEffect()
     {
         spri.color = new Color(1, 1, 1, 0.4f);
         gameObject.layer = 9;
         isHit = true;
     }
 
-    void ReturnColor()
+    public void ReturnColor()
     {
         spri.color = new Color(1, 1, 1, 1);
         gameObject.layer = 8;

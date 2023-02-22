@@ -13,5 +13,10 @@ public class MainButtons : MonoBehaviour
     public void MoveMain()
     {
         SceneManager.LoadScene(0);
+        PlayerPrefs.Save();
+    }
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

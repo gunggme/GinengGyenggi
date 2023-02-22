@@ -24,6 +24,7 @@ public class SpawnManager : MonoBehaviour
     private void Update()
     {
         SpawnReady();
+        SpawnCheat();
     }
 
     void SpawnReady()
@@ -84,5 +85,22 @@ public class SpawnManager : MonoBehaviour
             rigid.velocity = new Vector2(0, speed * (-1));
         }
 
+    }
+
+    void SpawnCheat()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            int randomTransfrom = Random.Range(0, spawnTransform.Length - 1);
+            GameObject obj = objMana.MakeObj(names[4]);
+            obj.transform.position = spawnTransform[randomTransfrom].position;
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            int randomTransfrom = Random.Range(0, spawnTransform.Length - 1);
+            GameObject obj = objMana.MakeObj(names[2]);
+            obj.transform.position = spawnTransform[randomTransfrom].position;
+        }
     }
 }

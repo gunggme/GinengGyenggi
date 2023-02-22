@@ -8,7 +8,7 @@ public class Boss : MonoBehaviour
     [SerializeField] public float hp;
     [SerializeField] float speed;
     [SerializeField] float dmg;
-    [SerializeField] float score;
+    [SerializeField] int score;
 
     [SerializeField] bool isMove;
 
@@ -202,7 +202,7 @@ public class Boss : MonoBehaviour
         }
     }
 
-    void OnHit(float dmg)
+    public void OnHit(float dmg)
     {
         hp -= dmg;
 
@@ -211,6 +211,7 @@ public class Boss : MonoBehaviour
         if(hp <= 0)
         {
             CancelInvoke();
+            gameMana.score += score;
             spawnMana.bossOn = false;
             gameMana.bossTimer = 0;
             gameMana.StageEnd();

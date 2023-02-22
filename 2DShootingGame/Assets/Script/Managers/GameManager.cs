@@ -144,4 +144,9 @@ public class GameManager : MonoBehaviour
 
         bossObject.SetActive(true);
     }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }

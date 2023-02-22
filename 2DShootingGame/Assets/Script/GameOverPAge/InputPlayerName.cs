@@ -29,5 +29,6 @@ public class InputPlayerName : MonoBehaviour
             playerName = "Null";
         }
         PlayerPrefs.SetString("MaxScorePlayerName", playerName);
+        PlayerPrefs.Save();
     }
 }
