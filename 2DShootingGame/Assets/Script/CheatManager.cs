@@ -22,7 +22,7 @@ public class CheatManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Delete))
         {
-            AllDel();
+            AllDel();   
         }
     }
 
