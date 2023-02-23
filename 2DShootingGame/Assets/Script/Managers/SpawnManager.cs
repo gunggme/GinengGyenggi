@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Awake()
     {
-        names = new string[] { "EnemyS", "EnemyS", "RedCell", "EnemySs", "EnemyMs", "WhiteCell", "EnemyS", "EnemyM", "WhiteCell", "EnemyL"};
+        names = new string[] { "EnemyS", "EnemyS", "RedCell", "EnemyL", "EnemySs", "EnemyMs", "WhiteCell", "EnemyS", "EnemyM", "WhiteCell", "EnemyL", "EnemyL"};
     }
 
     private void Update()

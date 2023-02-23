@@ -20,7 +20,7 @@ public class MainButtons : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
-    void GameQuit()
+    public void GameQuit()
     {
         Application.Quit();
     }

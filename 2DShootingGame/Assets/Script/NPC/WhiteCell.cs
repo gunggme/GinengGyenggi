@@ -12,7 +12,7 @@ public class WhiteCell : MonoBehaviour
     private void Awake()
     {
         objMana = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();
-        items = new string[] { "HP", "Coin", "Power", "MZItem", "SickDown", "Boom" };
+        items = new string[] { "Coin", "HP", "Coin", "Power", "MZItem", "SickDown", "Boom", "Coin", "HP", "Coin" };
     }
 
     void DropItem()
@@ -30,5 +30,8 @@ public class WhiteCell : MonoBehaviour
             DropItem();
             gameObject.SetActive(false);
         }
+
+        if (collision.attachedRigidbody.CompareTag("Border"))
+            gameObject.SetActive(false);
     }
 }

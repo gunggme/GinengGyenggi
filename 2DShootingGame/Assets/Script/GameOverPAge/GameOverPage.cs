@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOverPage : MonoBehaviour
@@ -35,6 +36,12 @@ public class GameOverPage : MonoBehaviour
         {
             InputNames();
         }
+    }
+
+    public void MoveMain()
+    {
+        SceneManager.LoadScene(0);
+        PlayerPrefs.Save();
     }
 
     void InputNames()

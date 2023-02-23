@@ -22,5 +22,7 @@ public class RedCell : MonoBehaviour
             gameMana.curSick += 5;
             gameObject.SetActive(false);
         }
+        if (collision.attachedRigidbody.CompareTag("Border"))
+            gameObject.SetActive(false);
     }
 }
