@@ -138,7 +138,7 @@ public class Enemys : MonoBehaviour
         curDelay = 0;
     }
 
-    void OnHit(float dmg)
+    public void OnHit(float dmg)
     {
         hp -= dmg;
 

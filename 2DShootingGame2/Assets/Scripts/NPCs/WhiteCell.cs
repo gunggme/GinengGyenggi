@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WhiteCell : MonoBehaviour
 {
-    string[] items = { "Coin", "Coin", "Power", "Hp", "Coin"};
+    string[] items = { "Coin", "Coin", "Power", "Hp", "MZItem", "SickDown", "Coin"};
 
     ObjectManager objMana;
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
 
     void StageTextOff()
     {
+        //stageText끄기
         stageText.gameObject.SetActive(false);
     }
     
@@ -68,10 +70,23 @@ public class GameManager : MonoBehaviour
         Invoke("StageTextOff", 0.5f);
         //stageNum + 1추가
         stageNum++;
+        //만약 stageNum이 2가 넘어간다면
+        if(stageNum > 2)
+        {
+            //게임오버 페이지로 이동
+            StageOver();
+            return;
+        }
         //Stage시작
         Invoke("StageStart", 1f);
         //BossTimer 초기화
         bossTimer = 0;
+    }
+
+    void StageOver()
+    {
+        //스테이지 이동
+        //점수를 PlayerPrefs로 저장
     }
 
     void SetPlayerHPUI()

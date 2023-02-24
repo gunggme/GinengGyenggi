@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField] float curDelay;
     [SerializeField] float maxDelay;
 
+    [Header("BoomItem Effect")]
+    [SerializeField] GameObject boomEffect;
+
     [Header("OnHit Check")]
     [SerializeField] bool isHit;
 
@@ -20,6 +23,9 @@ public class Player : MonoBehaviour
 
     Animator ani;
     SpriteRenderer spri;
+
+    bool isMz;
+    Coroutine coru; 
 
     private void Awake()
     {
@@ -163,6 +169,32 @@ public class Player : MonoBehaviour
         gameObject.layer = 9;
     }
 
+    void ReturnColor2()
+    {
+        spri.color = new Color(1, 1, 1, 0.4f);
+    }
+
+    IEnumerator MZ()
+    {
+        isMz = true;
+        OnHitEffect();
+        yield return new WaitForSeconds(2.4f);
+        ReturnColor2();
+        yield return new WaitForSeconds(0.1f);
+        OnHitEffect();
+        yield return new WaitForSeconds(0.1f);
+        ReturnColor2();
+        yield return new WaitForSeconds(0.1f);
+        OnHitEffect();
+        yield return new WaitForSeconds(0.1f);
+        ReturnColor2();
+        yield return new WaitForSeconds(0.1f);
+        OnHitEffect();
+        yield return new WaitForSeconds(0.1f);
+        ReturnColor();
+        isMz = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (!isHit)
@@ -212,6 +244,26 @@ public class Player : MonoBehaviour
                     {
                         hp += 5;
                     }
+                    break;
+                case "MZItem":
+                    //무적 아이템 3초동안 지속, 만약 3초가 지나가기 전에 먹으면 시간 초기화
+                    if (!isMz)
+                    {
+                        coru = StartCoroutine("MZ");
+                    }
+                    else
+                    {
+                        StopCoroutine(coru);
+                        coru = StartCoroutine("MZ");
+                    }
+                    break;
+                case "SickDown":
+                    //고통 게이지를 줄여주는 아이템 단 0이하로 안내려간다.
+                    gameMana.curSick -= 10;
+                    break;
+                case "Boom":
+                    //화면 전체에 있는 적, 총알들 삭제 하지만 보스에겐 데미지 안들어감
+                    boomEffect.gameObject.SetActive(true);
                     break;
             }
 

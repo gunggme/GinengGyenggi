@@ -9,6 +9,8 @@ public class ObjectManager : MonoBehaviour
     [SerializeField] GameObject coinPrefab;
     [SerializeField] GameObject powerPrefab;
     [SerializeField] GameObject hpPrefab;
+    [SerializeField] GameObject mzItemPrefab;
+    [SerializeField] GameObject sickDownPrefab;
     [Header("Enemy")]
     [SerializeField] GameObject enemySPrefab; 
     [SerializeField] GameObject enemySsPrefab; 
@@ -32,6 +34,8 @@ public class ObjectManager : MonoBehaviour
     GameObject[] coin;
     GameObject[] power;
     GameObject[] hp;
+    GameObject[] mzItem;
+    GameObject[] sickDown;
     //Enemy
     GameObject[] enemyS;
     GameObject[] enemySs;
@@ -59,6 +63,8 @@ public class ObjectManager : MonoBehaviour
         coin = new GameObject[10];
         power = new GameObject[10];
         hp = new GameObject[10];
+        mzItem = new GameObject[10];
+        sickDown = new GameObject[10];
         //Enemy
         enemyS = new GameObject[20];
         enemySs = new GameObject[20];
@@ -98,6 +104,16 @@ public class ObjectManager : MonoBehaviour
         {
             hp[i] = Instantiate(hpPrefab);
             hp[i].gameObject.SetActive(false);
+        }
+        for(int i = 0; i < sickDown.Length; i++)
+        {
+            sickDown[i] = Instantiate(sickDownPrefab);
+            sickDown[i].gameObject.SetActive(false);
+        }
+        for(int i = 0; i < mzItem.Length; i++)
+        {
+            sickDown[i] = Instantiate(mzItemPrefab);
+            sickDown[i].gameObject.SetActive(false);
         }
         //Enemy
         for(int i = 0;  i < enemyS.Length; i++)
@@ -184,6 +200,12 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "Hp":
                 targetPool = hp;
+                break;
+            case "MZItem":
+                targetPool = mzItem;
+                break;
+            case "SickDown":
+                targetPool = sickDown;
                 break;
             //Enemy
             case "EnemyS":

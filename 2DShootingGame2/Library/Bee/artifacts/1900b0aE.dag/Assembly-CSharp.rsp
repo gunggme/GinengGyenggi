@@ -379,6 +379,7 @@
 "Assets/Scripts/Boss/Boss.cs"
 "Assets/Scripts/Bullet/Bullets.cs"
 "Assets/Scripts/Enemy/Enemys.cs"
+"Assets/Scripts/Item/Boom.cs"
 "Assets/Scripts/Item/Item.cs"
 "Assets/Scripts/Manager/GameManager.cs"
 "Assets/Scripts/Manager/ObjectManager.cs"
