@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Border
+  - PlayerBullet
+  - Enemy
+  - EnemyBullet
+  - Item
+  - Boss
+  - BossBullet
+  - WhiteCell
+  - RedCell
   layers:
   - Default
   - TransparentFX
@@ -14,17 +23,17 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - PlayerOnHit
+  - PlayerBullet
+  - Enemy
+  - EnemyBullet
+  - Boss
+  - BossBullet
+  - WhiteCell
+  - RedCell
+  - Item
+  - Border
   - 
   - 
   - 
