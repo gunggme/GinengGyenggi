@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] int stageNum;
     [SerializeField] Text stageText;
 
+    [Header("Manager")]
+    [SerializeField] SpawnManager spawnMana;
+
     private void Awake()
     {
         stageNum = 1;
@@ -70,23 +73,29 @@ public class GameManager : MonoBehaviour
         Invoke("StageTextOff", 0.5f);
         //stageNum + 1추가
         stageNum++;
+        //몬스터 나오게 시작
+        spawnMana.spawnStop = false;
         //만약 stageNum이 2가 넘어간다면
         if(stageNum > 2)
         {
             //게임오버 페이지로 이동
-            StageOver();
+            Invoke("StageOver", 0.7f);
+            bossTimer = 0;
             return;
         }
         //Stage시작
         Invoke("StageStart", 1f);
         //BossTimer 초기화
-        bossTimer = 0;
+        
     }
 
     void StageOver()
     {
-        //스테이지 이동
         //점수를 PlayerPrefs로 저장
+        CancelInvoke();
+        PlayerPrefs.SetInt("CurScore", score);
+        //게임오버 씬 이동
+        SceneManager.LoadScene(2);
     }
 
     void SetPlayerHPUI()
