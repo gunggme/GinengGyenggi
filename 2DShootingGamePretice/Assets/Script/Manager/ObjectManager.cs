@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
+    [Header("Enemy")]
+    [SerializeField] GameObject enemySPrefab;
+    [SerializeField] GameObject enemySsPrefab;
+    [SerializeField] GameObject enemyMPrefab;
+    [SerializeField] GameObject enemyMsPrefab;
+    [SerializeField] GameObject enemyLPrefab;
     [Header("Enemy Bullet")]
     [SerializeField] GameObject enemyBullet1Prefab;
     [SerializeField] GameObject enemyBullet2Prefab;
@@ -11,6 +17,12 @@ public class ObjectManager : MonoBehaviour
     [SerializeField] GameObject playerBullet1Prefab;
     [SerializeField] GameObject playerBullet2Prefab;
 
+    //Enemy
+    GameObject[] enemyS;
+    GameObject[] enemySs;
+    GameObject[] enemyM;
+    GameObject[] enemyMs;
+    GameObject[] enemyL;
     //EnemyBullet
     GameObject[] enemyBullet1;
     GameObject[] enemyBullet2;
@@ -22,6 +34,12 @@ public class ObjectManager : MonoBehaviour
 
     private void Awake()
     {
+        //Enemy
+        enemyS = new GameObject[20];
+        enemySs = new GameObject[20];
+        enemyM = new GameObject[20];
+        enemyMs = new GameObject[20];
+        enemyL = new GameObject[20];
         //EnemyBullet
         enemyBullet1 = new GameObject[100];
         enemyBullet2 = new GameObject[100];
@@ -34,8 +52,34 @@ public class ObjectManager : MonoBehaviour
 
     void Generate()
     {
+        //Enemy
+        for(int i = 0; i < enemyS.Length; i++)
+        {
+            enemyS[i] = Instantiate(enemySPrefab);
+            enemyS[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < enemySs.Length; i++)
+        {
+            enemySs[i] = Instantiate(enemySsPrefab);
+            enemySs[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < enemyM.Length; i++)
+        {
+            enemyM[i] = Instantiate(enemyMPrefab);
+            enemyM[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < enemyMs.Length; i++)
+        {
+            enemyMs[i] = Instantiate(enemyMsPrefab);
+            enemyMs[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < enemyL.Length; i++)
+        {
+            enemyL[i] = Instantiate(enemyLPrefab);
+            enemyL[i].gameObject.SetActive(false);
+        }
         //EnemyBullet
-        for(int i = 0; i < enemyBullet1.Length; i++)
+        for (int i = 0; i < enemyBullet1.Length; i++)
         {
             enemyBullet1[i] = Instantiate(enemyBullet1Prefab);
             enemyBullet1[i].gameObject.SetActive(false);
@@ -62,12 +106,30 @@ public class ObjectManager : MonoBehaviour
     {
         switch (name)
         {
+            //Enemy
+            case "EnemyS":
+                targetPool = enemyS;
+                break;
+            case "EnemySs":
+                targetPool = enemySs;
+                break;
+            case "EnemyM":
+                targetPool = enemyM;
+                break;
+            case "EnemyMs":
+                targetPool = enemyMs;
+                break;
+            case "EnemyL":
+                targetPool = enemyL;
+                break;
+            //PlayerBullet
             case "PlayerBullet1":
                 targetPool = playerBullet1;
                 break;
             case "PlayerBullet2":
                 targetPool = playerBullet2;
                 break;
+            //EnemyBullet
             case "EnemyBullet1":
                 targetPool = enemyBullet1;
                 break;

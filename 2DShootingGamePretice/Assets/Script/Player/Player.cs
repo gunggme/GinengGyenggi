@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     [Header("Player Stat")]
     [SerializeField] float speed;
-    [SerializeField] float hp;
+    [SerializeField] public float hp;
     [SerializeField] int power;
     [SerializeField] float curDelay;
     [SerializeField] float maxDelay;
@@ -16,6 +16,10 @@ public class Player : MonoBehaviour
 
     [Header("Etc")]
     [SerializeField] Animator ani;
+    [SerializeField] SpriteRenderer spri;
+
+
+    bool isHit;
 
     private void Awake()
     {
@@ -121,5 +125,53 @@ public class Player : MonoBehaviour
                 break;
         }
         curDelay = 0;
+    }
+
+    void OnHit(float dmg)
+    {
+        hp -= dmg;
+
+        OnHitEffect();
+        Invoke("ReturnColor", 1.5f);
+
+        if(hp < 1)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+
+
+    void OnHitEffect()
+    {
+        spri.color = new Color(1, 1, 1, 0.5f);
+        gameObject.layer = 9;
+        isHit = true;
+    }
+
+    void ReturnColor()
+    {
+        spri.color = new Color(1, 1, 1, 1);
+        gameObject.layer = 8;
+        isHit = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isHit)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                Enemys enem = collision.gameObject.GetComponent<Enemys>();
+                OnHit(enem.dmg);
+                enem.OnHit(9999);
+            }
+            if (collision.gameObject.CompareTag("EnemyBullet"))
+            {
+                Bullet enem = collision.gameObject.GetComponent<Bullet>();
+                OnHit(enem.dmg);
+                collision.gameObject.SetActive(false);
+            }
+        }
     }
 }

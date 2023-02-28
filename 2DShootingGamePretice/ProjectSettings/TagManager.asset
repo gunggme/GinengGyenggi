@@ -22,16 +22,16 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - PlayerOnHit
+  - PlayerBullet
+  - Enemy
+  - EnemyBullet
+  - RedCell
+  - WhiteCell
+  - Boss
+  - BossBullet
+  - Item
   - 
   - 
   - 
