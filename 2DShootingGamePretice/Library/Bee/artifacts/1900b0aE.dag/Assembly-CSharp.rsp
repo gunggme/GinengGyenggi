@@ -379,9 +379,11 @@
 "Assets/Script/Bullet/Bullet.cs"
 "Assets/Script/Enemy/Enemys.cs"
 "Assets/Script/GameOver/GameOver.cs"
+"Assets/Script/Item/Item.cs"
 "Assets/Script/Manager/GameManager.cs"
 "Assets/Script/Manager/ObjectManager.cs"
 "Assets/Script/Manager/SpawnManager.cs"
+"Assets/Script/NPCs/WhiteCell.cs"
 "Assets/Script/Player/Player.cs"
 "Assets/Vertical 2D Shooting BE4/ReadMe/Scripts/ReadmeBE4.cs"
 -langversion:9.0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 647988379434940064}
   - component: {fileID: 647988379434940065}
   - component: {fileID: 647988379434940062}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy L
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -147,4 +147,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: EnemyL
+  dmg: 0
   speed: 0
