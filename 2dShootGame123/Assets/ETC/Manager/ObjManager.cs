@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class ObjManager : MonoBehaviour
 {
+    [Header("Item")]
+    [SerializeField] GameObject coinPrefab;
+    [SerializeField] GameObject powerPrefab;
+    [SerializeField] GameObject hpPrefab;
+    [SerializeField] GameObject oilItemPrefab;
+    [Header("Enemy")]
+    [SerializeField] GameObject enemySPrefab;
+    [SerializeField] GameObject enemyMPrefab;
+    [SerializeField] GameObject enemyLPrefab;
+    [SerializeField] GameObject meteoPrefab;
     [Header("EnemyBullet")]
     [SerializeField] GameObject enemyBullet1Prefab;
     [SerializeField] GameObject enemyBullet2Prefab;
@@ -11,6 +21,16 @@ public class ObjManager : MonoBehaviour
     [SerializeField] GameObject playerBullet1Prefab;
     [SerializeField] GameObject playerBullet2Prefab;
 
+    //Item
+    GameObject[] coin;
+    GameObject[] power;
+    GameObject[] hp;
+    GameObject[] oilItem;
+    //Enemy
+    GameObject[] enemyS;
+    GameObject[] enemyM;
+    GameObject[] enemyL;
+    GameObject[] meteo;
     //EnemyBullet
     GameObject[] enemyBullet1;
     GameObject[] enemyBullet2;
@@ -23,6 +43,16 @@ public class ObjManager : MonoBehaviour
 
     private void Awake()
     {
+        //Item
+        coin = new GameObject[10];
+        hp = new GameObject[10];
+        power = new GameObject[10];
+        oilItem = new GameObject[10];
+        //Enemy
+        enemyS = new GameObject[20];
+        enemyM = new GameObject[20];
+        enemyL = new GameObject[20];
+        meteo = new GameObject[20];
         //EnemyBullet
         enemyBullet1 = new GameObject[50];
         enemyBullet2 = new GameObject[50];
@@ -35,8 +65,50 @@ public class ObjManager : MonoBehaviour
 
     void Generate()
     {
+        //Item
+        for(int i = 0; i < coin.Length; i++)
+        {
+            coin[i] = Instantiate(coinPrefab);
+            coin[i].gameObject.SetActive(false);
+        }
+        for(int i = 0; i < power.Length; i++)
+        {
+            power[i] = Instantiate(powerPrefab);
+            power[i].gameObject.SetActive(false);
+        }
+        for(int i = 0; i < hp.Length; i++)
+        {
+            hp[i] = Instantiate(hpPrefab);
+            hp[i].gameObject.SetActive(false);
+        }
+        for(int i = 0; i < oilItem.Length; i++)
+        {
+            oilItem[i] = Instantiate (oilItemPrefab);
+            oilItem[i].gameObject.SetActive(false);
+        }
+        //Enemy
+        for(int i = 0; i < enemyS.Length; i++)
+        {
+            enemyS[i] = Instantiate(enemySPrefab);
+            enemyS[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < enemyM.Length; i++)
+        {
+            enemyM[i] = Instantiate(enemyMPrefab);
+            enemyM[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < enemyL.Length; i++)
+        {
+            enemyL[i] = Instantiate(enemyLPrefab);
+            enemyL[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < meteo.Length; i++)
+        {
+            meteo[i] = Instantiate(meteoPrefab);
+            meteo[i].gameObject.SetActive(false);
+        }
         //EnemyBullet
-        for(int i = 0; i < enemyBullet1.Length; i++)
+        for (int i = 0; i < enemyBullet1.Length; i++)
         {
             enemyBullet1[i] = Instantiate(enemyBullet1Prefab);
             enemyBullet1[i].gameObject.SetActive(false);
@@ -63,6 +135,32 @@ public class ObjManager : MonoBehaviour
     {
         switch (name)
         {
+            //Item
+            case "Coin":
+                targetPool = coin;
+                break;
+            case "HP":
+                targetPool = hp;
+                break;
+            case "Power":
+                targetPool = power;
+                break;
+            case "Oil":
+                targetPool = oilItem;
+                break;
+            //Enemy
+            case "Meteo":
+                targetPool = meteo;
+                break;
+            case "EnemyS":
+                targetPool = enemyS;
+                break;
+            case "EnemyM":
+                targetPool = enemyM;
+                break;
+            case "EnemyL":
+                targetPool = enemyL;
+                break;
             //EnemyBullet
             case "EnemyBullet1":
                 targetPool = enemyBullet1;

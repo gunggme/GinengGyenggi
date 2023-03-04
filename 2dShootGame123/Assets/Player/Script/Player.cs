@@ -7,23 +7,38 @@ public class Player : MonoBehaviour
 {
     [Header("Player stats")]
     [SerializeField] float speed;
-    [SerializeField] float hp;
+    [SerializeField] public float hp;
+    [SerializeField] public float oil;
     [SerializeField] float power;
 
+    [Header("ShotDelay")]
     [SerializeField] float curDelay;
     [SerializeField] float maxDelay;
 
+    [Header("Skills")]
     [SerializeField] float curSkill1Delay;
     [SerializeField] float curSkill2Delay;
     [SerializeField] float skill1Delay;
     [SerializeField] float skill2Delay;
 
+    [Header("OilDownDelay")]
+    [SerializeField] float curOilDownDelay;
+    [SerializeField] float maxOilDownDelay;
+
+    [SerializeField] bool isHit;
+
+    [Header("BoomObj")]
+    [SerializeField] GameObject boom;
+
     [Header("ETC")]
+    [SerializeField] SpriteRenderer spri;
     [SerializeField] Animator playerA;
     [SerializeField] ObjManager objMana;
+    [SerializeField] GameManager gameMana;
 
     private void Awake()
     {
+        oil = 100;
         hp = 30;
         maxDelay = 0.3f;
     }
@@ -33,6 +48,13 @@ public class Player : MonoBehaviour
         Move();
         Shot();
         Skill1();
+        Skill2();
+        oilDown();
+
+        if (hp > 30)
+        {
+            hp = 30;
+        }
     }
 
     void Move()
@@ -109,7 +131,6 @@ public class Player : MonoBehaviour
 
         curDelay = 0;
     }
-
     void Skill1()
     {
         if(curSkill1Delay < skill1Delay)
@@ -117,8 +138,119 @@ public class Player : MonoBehaviour
             curSkill1Delay += Time.deltaTime;
             return;
         }
+        if (!Input.GetKeyDown(KeyCode.E))
+        {
+            return;
+        }
 
         hp += 10;
         curSkill1Delay = 0;
+    }
+    void Skill2()
+    {
+        if (curSkill2Delay < skill2Delay)
+        {
+            curSkill1Delay += Time.deltaTime;
+            return;
+        }
+        if (!Input.GetKeyDown(KeyCode.R))
+        {
+            return;
+        }
+
+        boom.gameObject.SetActive(true);
+        curSkill2Delay = 0;
+    }
+
+    void oilDown()
+    {
+        if(curOilDownDelay < maxOilDownDelay)
+        {
+            curOilDownDelay += Time.deltaTime;
+            return;
+        }
+        oil -= 5;
+        curOilDownDelay = 0;
+    }
+    void OnHit(float dmg)
+    {
+        hp -= dmg;
+
+        OnHitEffect();
+        Invoke("ReturnColor", 1);
+
+        if(hp <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    void OnHitEffect()
+    {
+        spri.color = new Color(1, 1, 1, 0.4f);
+        isHit = true;
+        gameObject.layer = 10;
+    }
+
+    void ReturnColor()
+    {
+        spri.color = new Color(1, 1, 1, 1);
+        isHit = false;
+        gameObject.layer = 9;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isHit)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                Enemy enem = collision.gameObject.GetComponent<Enemy>();
+                OnHit(enem.dmg / 2);
+                //적도 같이 데미지 9999 주면서 삭제 시키기
+                enem.OnHit(9999);
+            }
+            if (collision.gameObject.CompareTag("EnemyBullet"))
+            {
+                Bullet bu = collision.gameObject.GetComponent<Bullet>();
+                OnHit(bu.dmg);
+                bu.CancelInvoke();
+                collision.gameObject.SetActive(false);
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            switch (item.name)
+            {
+                case "Coin":
+                    gameMana.score += 500;
+                    break;
+                case "HP":
+                    if(hp > 30)
+                    {
+                        hp = 30;
+                        gameMana.score += 300;
+                    }
+                    else
+                    {
+                        hp += 5;
+                    }
+                    break;
+                case "Power":
+                    if(power > 4)
+                    {
+                        power = 4;
+                        gameMana.score = 300;
+                    }
+                    else
+                    {
+                        power++;
+                    }
+                    break;
+            }
+        }
     }
 }

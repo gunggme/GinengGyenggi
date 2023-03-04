@@ -13,6 +13,7 @@ TagManager:
   - RedCell
   - Item
   - Border
+  - Boom
   layers:
   - Default
   - TransparentFX

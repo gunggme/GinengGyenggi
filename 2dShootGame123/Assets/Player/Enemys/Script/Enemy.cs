@@ -8,16 +8,24 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy Stats")]
     [SerializeField] float hp;
-    [SerializeField] float speed;
-    [SerializeField] float dmg;
+    [SerializeField] public float speed;
+    [SerializeField] public float dmg;
     [SerializeField] float curDelay;
     [SerializeField] float maxDelay;
+    [SerializeField] float score;
 
+    string[] itemNames;
+
+    GameManager gameMana;
+    SpriteRenderer spri;
     ObjManager objMana;
     Transform playerT;
 
     private void Awake()
     {
+        itemNames = new string[] {  "HP", "Oil", "Coin", "Power" };
+        gameMana = GameObject.Find("GameManager").GetComponent<GameManager>();
+        spri = GetComponent<SpriteRenderer>();
         objMana = GameObject.Find("ObjectManager").GetComponent<ObjManager>();
         playerT = GameObject.Find("Player").transform;
     }
@@ -27,26 +35,30 @@ public class Enemy : MonoBehaviour
         switch (name)
         {
             case "Meteo":
-                hp = 10;
+                hp = 3;
                 speed = 5;
                 dmg = 5;
+                score = 100;
                 break;
             case "S":
                 hp = 5;
                 speed = 3;
                 dmg = 6;
                 maxDelay = 1;
+                score = 200;
                 break;
             case "M":
                 hp = 10;
                 speed = 10;
                 dmg = 10;
+                score = 300;
                 break;
             case "L":
                 hp = 20;
                 speed = 2;
                 dmg = 10;
                 maxDelay = 1.3f;
+                score = 500;
                 break;
         }
     }
@@ -99,5 +111,55 @@ public class Enemy : MonoBehaviour
             rigidR.AddForce(vec.normalized * 7, ForceMode2D.Impulse);
         }
         curDelay = 0;   
+    }
+
+    public void OnHit(float dmg)
+    {
+        hp -= dmg;
+
+        OnHitEffect();
+        Invoke("ReturnColor", 0.3f);
+
+        if (hp <= 0)
+        {
+            int ranItem = Random.Range(0, itemNames.Length);
+            GameObject dir = objMana.MakeObj(itemNames[ranItem]);
+            dir.transform.position = transform.position;
+
+
+            gameMana.score += score;
+            gameObject.SetActive(false);
+        }
+    }
+
+    void OnHitEffect()
+    {
+        spri.color = new Color(1, 1, 1, 0.4f);
+    }
+
+    void ReturnColor()
+    {
+        spri.color = new Color(1, 1, 1, 1);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerBullet"))
+        {
+            Bullet bu = collision.GetComponent<Bullet>();
+            OnHit(bu.dmg);
+            bu.CancelInvoke();
+            collision.gameObject.SetActive(false);
+        }
+        if (collision.gameObject.CompareTag("Boom"))
+        {
+            gameObject.transform.rotation = Quaternion.identity;
+            OnHit(9999);
+        }
+        if (collision.gameObject.CompareTag("Border"))
+        {
+            transform.rotation = Quaternion.identity;
+            gameObject.SetActive(false);
+        }
     }
 }
