@@ -202,6 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00bc07af529832a479ffa5c292a743b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyBullet1Prefab: {fileID: 8079948460134656348, guid: b48ce9f17e6922c44953c7d48378a884, type: 3}
+  enemyBullet2Prefab: {fileID: 2191647514588231249, guid: 8410e46fb46ba37419d9dadaae31fdbb, type: 3}
   playerBullet1Prefab: {fileID: 1677475248142281114, guid: ea0411a5df05d964f944d0b1e0c48625, type: 3}
   playerBullet2Prefab: {fileID: 1327662368658359611, guid: 94f8a45b4d0247942a920262be887a5e, type: 3}
 --- !u!1 &257133818

@@ -378,6 +378,7 @@
 "Assets/ETC/Background.cs"
 "Assets/ETC/Bullet.cs"
 "Assets/ETC/Manager/ObjManager.cs"
+"Assets/Player/Enemys/Script/Enemy.cs"
 "Assets/Player/Script/Player.cs"
 "Assets/Vertical 2D Shooting BE4/ReadMe/Scripts/ReadmeBE4.cs"
 -langversion:9.0

@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     {
         Move();
         Shot();
+        Skill1();
     }
 
     void Move()
@@ -107,5 +108,17 @@ public class Player : MonoBehaviour
         }
 
         curDelay = 0;
+    }
+
+    void Skill1()
+    {
+        if(curSkill1Delay < skill1Delay)
+        {
+            curSkill1Delay += Time.deltaTime;
+            return;
+        }
+
+        hp += 10;
+        curSkill1Delay = 0;
     }
 }

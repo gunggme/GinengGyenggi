@@ -4,18 +4,28 @@ using UnityEngine;
 
 public class ObjManager : MonoBehaviour
 {
+    [Header("EnemyBullet")]
+    [SerializeField] GameObject enemyBullet1Prefab;
+    [SerializeField] GameObject enemyBullet2Prefab;
     [Header("Player Bullet")]
     [SerializeField] GameObject playerBullet1Prefab;
     [SerializeField] GameObject playerBullet2Prefab;
 
+    //EnemyBullet
+    GameObject[] enemyBullet1;
+    GameObject[] enemyBullet2;
     //PlayerBullet
     GameObject[] playerBullet1;
     GameObject[] playerBullet2;
+
 
     GameObject[] targetPool;
 
     private void Awake()
     {
+        //EnemyBullet
+        enemyBullet1 = new GameObject[50];
+        enemyBullet2 = new GameObject[50];
         //PlayerBullet
         playerBullet1 = new GameObject[100];
         playerBullet2 = new GameObject[100];
@@ -25,7 +35,19 @@ public class ObjManager : MonoBehaviour
 
     void Generate()
     {
-        for(int i = 0; i < playerBullet1.Length; i++)
+        //EnemyBullet
+        for(int i = 0; i < enemyBullet1.Length; i++)
+        {
+            enemyBullet1[i] = Instantiate(enemyBullet1Prefab);
+            enemyBullet1[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < enemyBullet2.Length; i++)
+        {
+            enemyBullet2[i] = Instantiate(enemyBullet2Prefab);
+            enemyBullet2[i].gameObject.SetActive(false);
+        }
+        //PlayerBullet
+        for (int i = 0; i < playerBullet1.Length; i++)
         {
             playerBullet1[i] = Instantiate(playerBullet1Prefab);
             playerBullet1[i].gameObject.SetActive(false);
@@ -41,6 +63,14 @@ public class ObjManager : MonoBehaviour
     {
         switch (name)
         {
+            //EnemyBullet
+            case "EnemyBullet1":
+                targetPool = enemyBullet1;
+                break;
+            case "EnemyBullet2":
+                targetPool = enemyBullet2;
+                break;
+            //PlayerBullet
             case "PlayerBullet1":
                 targetPool = playerBullet1;
                 break;
