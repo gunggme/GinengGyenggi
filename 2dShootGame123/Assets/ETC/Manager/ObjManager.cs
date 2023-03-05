@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ObjManager : MonoBehaviour
 {
+    [Header("BossBullet")]
+    [SerializeField] GameObject bossBullet1Prefab;
+    [SerializeField] GameObject bossBullet2Prefab;
     [Header("Item")]
     [SerializeField] GameObject coinPrefab;
     [SerializeField] GameObject powerPrefab;
@@ -21,6 +24,9 @@ public class ObjManager : MonoBehaviour
     [SerializeField] GameObject playerBullet1Prefab;
     [SerializeField] GameObject playerBullet2Prefab;
 
+    //BossBullet
+    GameObject[] bossBullet1;
+    GameObject[] bossBullet2;
     //Item
     GameObject[] coin;
     GameObject[] power;
@@ -43,6 +49,9 @@ public class ObjManager : MonoBehaviour
 
     private void Awake()
     {
+        //BossBullet
+        bossBullet1 = new GameObject[100];
+        bossBullet2 = new GameObject[100];
         //Item
         coin = new GameObject[10];
         hp = new GameObject[10];
@@ -65,8 +74,19 @@ public class ObjManager : MonoBehaviour
 
     void Generate()
     {
+        //BossBullet
+        for(int i = 0; i < bossBullet1.Length; i++)
+        {
+            bossBullet1[i] = Instantiate(bossBullet1Prefab);
+            bossBullet1[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < bossBullet2.Length; i++)
+        {
+            bossBullet2[i] = Instantiate(bossBullet2Prefab);
+            bossBullet2[i].gameObject.SetActive(false);
+        }
         //Item
-        for(int i = 0; i < coin.Length; i++)
+        for (int i = 0; i < coin.Length; i++)
         {
             coin[i] = Instantiate(coinPrefab);
             coin[i].gameObject.SetActive(false);
@@ -135,6 +155,13 @@ public class ObjManager : MonoBehaviour
     {
         switch (name)
         {
+            //BossBullet
+            case "BossBullet1":
+                targetPool = bossBullet1;
+                break;
+            case "BossBullet2":
+                targetPool = bossBullet2;
+                break;
             //Item
             case "Coin":
                 targetPool = coin;
