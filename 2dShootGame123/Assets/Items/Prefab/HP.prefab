@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 2550431604670598276}
   - component: {fileID: 2550431604670598277}
   - component: {fileID: 8325877394082888671}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: HP
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

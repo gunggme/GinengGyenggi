@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] public float dmg;
     [SerializeField] float curDelay;
     [SerializeField] float maxDelay;
-    [SerializeField] float score;
+    [SerializeField] int score;
 
     string[] itemNames;
 

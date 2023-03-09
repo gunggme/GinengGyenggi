@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Score")]
     [SerializeField] public int score;
+    [SerializeField] Text scoreText;
 
     [Header("Boss")]
     [SerializeField] float bossWaitDelay;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         setDurability();
         oilSet();
         BossHPSet();
+        ScoreSet();
         BossSet();
     }
 
@@ -67,6 +69,7 @@ public class GameManager : MonoBehaviour
         if(stageNum > 2)
         {
             //씬이동
+            Invoke("LoadGameOverScene", 1);
         }
         //아니면 게임 다음 라운드 시작하기
         else
@@ -91,10 +94,20 @@ public class GameManager : MonoBehaviour
         //게임오버 씬으로 이동
     }
 
+    void LoadGameOverScene()
+    {
+        SceneManager.LoadScene(3);
+    }
+
     void AniTextDown()
     {
         //지정한 애니메이션 텍스트 비활성화 시키기
         aniText.gameObject.SetActive(false);
+    }
+
+    void ScoreSet()
+    {
+        scoreText.text = "Score : " + score;
     }
 
     void setDurability()

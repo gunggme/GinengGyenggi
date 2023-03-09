@@ -251,6 +251,7 @@ public class Player : MonoBehaviour
                     }
                     break;
             }
+            collision.gameObject.SetActive(false);
         }
     }
 }
