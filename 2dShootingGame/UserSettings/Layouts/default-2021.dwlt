@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 0
     width: 503
     height: 864
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 78
+  controlID: 69
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 18
+  controlID: 85
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 19
+  controlID: 86
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -425,22 +425,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Boss/Script
+    - Assets/Player/Bullet
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 89
   m_LastFolders:
-  - Assets/Boss/Script
+  - Assets/Player/Bullet
   m_LastFoldersGridSize: 89
   m_LastProjectPath: D:\MakeGame\GinengGyenggi\2dShootingGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 647f0000
-    m_LastClickedID: 32612
-    m_ExpandedIDs: 00000000d2610000d4610000d6610000d8610000a867000012780000607f000000ca9a3b
+    m_SelectedIDs: d2600000
+    m_LastClickedID: 24786
+    m_ExpandedIDs: 00000000ba600000bc600000be600000c0600000ce60000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -468,7 +468,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d2610000d4610000d6610000d8610000
+    m_ExpandedIDs: 00000000ba600000bc600000be600000c0600000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -493,8 +493,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 0e66ffff
-    m_LastClickedInstanceID: -39410
+    m_SelectedInstanceIDs: a6780000
+    m_LastClickedInstanceID: 30886
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300004c600000d45f0000e45f0000f45f00000a60000052600000b66100005e610000
     m_RenameOverlay:
@@ -596,9 +596,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 0e66ffff
-      m_LastClickedID: -39410
-      m_ExpandedIDs: 26fbffff
+      m_SelectedIDs: cc780000
+      m_LastClickedID: 30924
+      m_ExpandedIDs: ccf5ffffbcf6ffff26fbffff186000003e790000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -902,9 +902,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.9749616, y: -0.97557294, z: -0.0213212}
+    m_Target: {x: 0.12168151, y: 2.140222, z: 86.16732}
     speed: 2
-    m_Value: {x: 1.9749616, y: -0.97557294, z: -0.0213212}
+    m_Value: {x: 0.12168151, y: 2.140222, z: 86.16732}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -955,9 +955,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 6.1837873
+    m_Target: 2.3108222
     speed: 2
-    m_Value: 6.1837873
+    m_Value: 2.3108222
   m_Ortho:
     m_Target: 1
     speed: 2

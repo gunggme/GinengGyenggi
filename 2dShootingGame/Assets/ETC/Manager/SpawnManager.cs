@@ -14,11 +14,18 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] float speed;
 
+    [SerializeField] public bool isSpawn;
+
     [SerializeField] ObjectManager objMana;
 
     private void Awake()
     {
         name = new string[] { "EnemyS", "EnemyM", "EnemyL", "Meteo" };
+    }
+
+    private void Start()
+    {
+        isSpawn = true;
     }
 
     private void Update()
@@ -28,15 +35,18 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnDelay()
     {
-        if(curDelay < nextDelay)
+        if (isSpawn)
         {
-            curDelay += Time.deltaTime;
-            return;
-        }
+            if (curDelay < nextDelay)
+            {
+                curDelay += Time.deltaTime;
+                return;
+            }
 
-        curDelay = 0;
-        nextDelay = Random.Range(0.5f, 1.2f);
-        Spawn();
+            curDelay = 0;
+            nextDelay = Random.Range(0.5f, 1.2f);
+            Spawn();
+        }
     }
 
     void Spawn()

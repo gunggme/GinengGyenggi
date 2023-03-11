@@ -170,10 +170,13 @@ public class ObjectManager : MonoBehaviour
                 targetPool = power;
                 break;
             case "Fuer":
-                targetPool = power;
+                targetPool = fuer;
                 break;
             case "HP":
                 targetPool = hp;
+                break;
+            case "None":
+                targetPool = null;
                 break;
             //Enemy
             case "EnemyS":
@@ -204,12 +207,15 @@ public class ObjectManager : MonoBehaviour
                 break;
         }
 
-        for(int i = 0; i < targetPool.Length;i++)
+        if(targetPool != null)
         {
-            if (!targetPool[i].activeSelf)
+            for (int i = 0; i < targetPool.Length; i++)
             {
-                targetPool[i].gameObject.SetActive(true);
-                return targetPool[i];
+                if (!targetPool[i].activeSelf)
+                {
+                    targetPool[i].gameObject.SetActive(true);
+                    return targetPool[i];
+                }
             }
         }
 

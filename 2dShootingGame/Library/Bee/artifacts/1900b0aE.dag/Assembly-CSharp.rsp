@@ -381,6 +381,7 @@
 "Assets/ETC/Bullet.cs"
 "Assets/ETC/Item/Script/Item.cs"
 "Assets/ETC/Manager/GameManager.cs"
+"Assets/ETC/Manager/GameOverManager.cs"
 "Assets/ETC/Manager/ObjectManager.cs"
 "Assets/ETC/Manager/SpawnManager.cs"
 "Assets/Player/Script/Player.cs"

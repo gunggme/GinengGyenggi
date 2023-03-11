@@ -10,4 +10,11 @@ public class Item : MonoBehaviour
     {
         transform.position += Vector3.down * 3 * Time.deltaTime;
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Border"))
+            gameObject.SetActive(false);
+    }
 }

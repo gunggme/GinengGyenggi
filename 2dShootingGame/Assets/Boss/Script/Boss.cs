@@ -19,9 +19,23 @@ public class Boss : MonoBehaviour
     [SerializeField] ObjectManager objMana;
     [SerializeField] Transform playerT;
     [SerializeField] SpriteRenderer spri;
+    [SerializeField] SpawnManager spawnMana;
+    [SerializeField] GameManager gameMana;
+
+    [Header("Item")]
+    [SerializeField] string[] name;
+    [SerializeField] float isItemDrop;
+
+    private void Awake()
+    {
+        name = new string[] { "None", "None", "None", "None", "None", "Power", "None", "None", "Fuer", "None", "None", "None", "None", "None", "HP", "Coin", "None", "None", "None", "None", "None", "Fuer", "None", "None", "Coin", "None", "None", "None", "None", "Fuer", "Fuer", "None", "Fuer", "None", "Fuer", "None", "HP", "None" };
+    }
 
     private void OnEnable()
     {
+        hp = 1000;
+        dmg = 10;
+        spawnMana.isSpawn = false;
         isMove = true;
         transform.position = new Vector3(0, 10, 0);
     }
@@ -59,6 +73,9 @@ public class Boss : MonoBehaviour
             break;
             case 3:
                 Invoke("SixShot", 1);
+                break;
+            case 5:
+                Invoke("EnemSpawn", 1);
                 break;
         }
     }
@@ -182,16 +199,45 @@ public class Boss : MonoBehaviour
         }
     }
 
+    void EnemSpawn()
+    {
+        spawnMana.isSpawn = true;
+        Invoke("EnemSpawnFalse", 10);
+        Invoke("Think", 1);
+    }
 
+    void EnemSpawnFalse()
+    {
+        spawnMana.isSpawn = false;
+    }
+    
+    
     void OnHit(float lk)
     {
         hp -= lk;
+        if (isItemDrop < 50)
+        {
+            int ranItem = Random.Range(0, name.Length);
+            GameObject dir = objMana.MakeObj(name[ranItem]);
+            if(dir != null)
+            {
+                dir.transform.position = transform.position;
+            }
+            
+        }
+        else
+        {
+            isItemDrop += 2;
+        }
+        
 
         Effect();
 
         if (hp <= 0)
         {
             CancelInvoke();
+            gameMana.score += 10000;
+            gameMana.GameEnd();
             gameObject.SetActive(false);
         }
     }
