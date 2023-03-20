@@ -4,58 +4,59 @@ using UnityEngine;
 
 public class Enemis : MonoBehaviour
 {
-    [Header("Enemy Stat")]
-    [SerializeField] string name;
-    public float speed;
-    [SerializeField] float hp;
-    [SerializeField] public float dmg;
+    [SerializeField] string enemName;
 
+    [Header("Enem Stat")]
+    [SerializeField] float hp;
+    [SerializeField] public float speed;
+
+    [Header("EnemDelay")]
     [SerializeField] float curDelay;
     [SerializeField] float maxDelay;
 
     [Header("ETC")]
-    ObjectManager objMana;
-    Transform playerT;
-    SpriteRenderer spri;
-
-    [SerializeField] string[] itemN;
+    [SerializeField] SpriteRenderer spri;
+    [SerializeField] Transform playerT;
+    [SerializeField] float score;
 
     private void Awake()
     {
-        itemN = new string[] { "Coin", "Power", "Fuer", "HP", "Coin", "Fuer", "Coin", "Fuer", "Fuer", "Fuer" };
-        spri = GetComponent<SpriteRenderer>();
         playerT = GameObject.Find("Player").transform;
-        objMana = GameObject.Find("ObjectManager").gameObject.GetComponent<ObjectManager>();
     }
 
     private void OnEnable()
     {
-        switch (name)
+        switch(enemName)
         {
-            case "Meteo":
-                hp = 5;
-                speed = 4;
-                dmg = 4;
-                break;
             case "S":
-                hp = 8;
-                speed = 3;
-                dmg = 2;
+                hp = 10;
+                speed = 4;
                 maxDelay = 1;
+                score = 300;
                 break;
             case "M":
-                hp = 12;
-                speed = 10;
-                dmg = 8;
+                hp = 14;
+                maxDelay = 0.8f;
+                speed = 3;
+                score = 400;
                 break;
             case "L":
-                hp = 15;
+                hp = 16;
                 speed = 1;
-                dmg = 10;
-                maxDelay = 1.5f;
+                maxDelay = 1;
+                score = 600;
+                break;
+            case "Meteo1":
+                hp = 6;
+                speed = 6;
+                score = 200;
+                break;
+            case "Meteo2":
+                hp = 8;
+                speed = 8;
+                score = 500;
                 break;
         }
-        
     }
 
     private void Update()
@@ -68,66 +69,71 @@ public class Enemis : MonoBehaviour
         if(curDelay < maxDelay)
         {
             curDelay += Time.deltaTime;
-            
             return;
         }
 
-        if(name == "S")
+        if(enemName == "S")
         {
             Vector3 vec = playerT.position - transform.position;
-            GameObject dir = objMana.MakeObj("EnemyBullet1");
+            GameObject dir = GameManager.Instance.objMana.MakeObj("EnemBullet1");
             dir.transform.position = transform.position;
-
-            Bullet bu = dir.GetComponent<Bullet>();
-            bu.dmg = dmg;
+            float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
+            dir.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
             Rigidbody2D rigid = dir.GetComponent<Rigidbody2D>();
-            rigid.AddForce(vec.normalized * 5, ForceMode2D.Impulse);
+            rigid.AddForce(vec.normalized * 6, ForceMode2D.Impulse);
         }
-        else if(name == "L")
+        else if(enemName == "M")
         {
             Vector3 vec = playerT.position - transform.position;
-            GameObject dirL = objMana.MakeObj("EnemyBullet2");
-            GameObject dirR = objMana.MakeObj("EnemyBullet2");
+            GameObject dir = GameManager.Instance.objMana.MakeObj("EnemBullet2");
+            dir.transform.position = transform.position;
+            float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
+            dir.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
-            Bullet bu = dirL.GetComponent<Bullet>();
-            bu.dmg = dmg;
-            Bullet bu2 = dirR.GetComponent<Bullet>();
-            bu2.dmg = dmg;
+            Rigidbody2D rigid = dir.GetComponent<Rigidbody2D>();
+            rigid.AddForce(vec.normalized * 6, ForceMode2D.Impulse);
+        }
+        else if(enemName == "L")
+        {
+            Vector3 vec = playerT.position - transform.position;
+            GameObject dir = GameManager.Instance.objMana.MakeObj("EnemBullet3");
+            GameObject dir2 = GameManager.Instance.objMana.MakeObj("EnemBullet3");
+            dir.transform.position = transform.position;
+            dir2.transform.position = transform.position;
+            float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
+            dir.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+            dir2.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
-            dirL.transform.position = transform.position + Vector3.left * 0.25f;
-            dirR.transform.position = transform.position + Vector3.right * 0.25f;
-
-            Rigidbody2D rigidL = dirL.GetComponent<Rigidbody2D>();
-            Rigidbody2D rigidR = dirR.GetComponent<Rigidbody2D>();
-
-            rigidL.AddForce(vec.normalized * 5, ForceMode2D.Impulse);
-            rigidR.AddForce(vec.normalized * 5, ForceMode2D.Impulse);
+            Rigidbody2D rigid = dir.GetComponent<Rigidbody2D>();
+            Rigidbody2D rigid2 = dir2.GetComponent<Rigidbody2D>();
+            rigid.AddForce(vec.normalized * 7, ForceMode2D.Impulse);
+            rigid2.AddForce(vec.normalized * 7, ForceMode2D.Impulse);
         }
 
         curDelay = 0;
     }
 
-    void OnHit(float lk)
+
+    void OnHit(float dmg)
     {
-        hp -= lk;
+        hp -= dmg;
 
-        Effect();
+        OnHitEffect();
 
-        if(hp <= 0)
+        if(hp < 1)
         {
-            int ranItem = Random.Range(0, itemN.Length);
-            transform.rotation = Quaternion.identity;
-            GameObject dir = objMana.MakeObj(itemN[ranItem]);
-            dir.transform.position = transform.position;
+            transform.position = new Vector2(10, 8);
+            GameManager.Instance.score += score;
+            GameManager.Instance.SetScore();
             gameObject.SetActive(false);
         }
     }
 
-    void Effect()
+    void OnHitEffect()
     {
-        spri.color = new Color(1, 1, 1, 0.6f);
-        Invoke("ReturnColor", 0.4f);
+        spri.color = new Color(1, 1, 1, 0.7f);
+        Invoke("ReturnColor", 0.3f);
     }
 
     void ReturnColor()
@@ -135,31 +141,17 @@ public class Enemis : MonoBehaviour
         spri.color = new Color(1, 1, 1, 1);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            OnHit(999999);
-        }
-    }
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Border"))
-        {
-            transform.rotation = Quaternion.identity;
             gameObject.SetActive(false);
-        }
-
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
-            Bullet bu = collision.GetComponent<Bullet>();
-
+            Bullet bu = collision.gameObject.GetComponent<Bullet>();
             OnHit(bu.dmg);
             collision.gameObject.SetActive(false);
         }
-
-        
+        if (collision.gameObject.CompareTag("Player"))
+            OnHit(9999);
     }
 }

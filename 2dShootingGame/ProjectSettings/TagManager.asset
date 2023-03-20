@@ -8,7 +8,6 @@ TagManager:
   - PlayerBullet
   - Enemy
   - EnemyBullet
-  - Item
   layers:
   - Default
   - TransparentFX
@@ -17,15 +16,15 @@ TagManager:
   - Water
   - UI
   - 
-  - 
   - Player
-  - OnHitPlayer
+  - PlayerOnHit
   - PlayerBullet
-  - Enemy
-  - EnemyBullet
-  - Boss
-  - BossBullet
+  - EnemBullet
+  - Enem
   - Item
+  - 
+  - 
+  - 
   - 
   - 
   - 

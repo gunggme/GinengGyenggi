@@ -5,8 +5,8 @@ using UnityEngine;
 public class Background : MonoBehaviour
 {
     [SerializeField] Transform target;
-    [SerializeField] float range;
     [SerializeField] float speed;
+    [SerializeField] float range;
 
     private void Update()
     {
