@@ -18,12 +18,15 @@ public class Enem : MonoBehaviour
 
     [Header("ETC")]
     [SerializeField] SpriteRenderer spri;
+    [SerializeField]
+    string[] itemItems;
 
     Transform playerT;
 
     private void Awake()
     {
         playerT = GameObject.Find("Player").transform;
+        itemItems = new string[] { null, "Fuer", "Fuer", "Coin", "Fuer", "Fuer", null, "Fuer", "Fuer", "HP", "Fuer", null, "HP", "Fuer", null, "HP", "Power", null, "Fuer", null, "MZ", null, null, null, "HP" };
     }
 
     private void OnEnable()
@@ -116,7 +119,7 @@ public class Enem : MonoBehaviour
         curDelay = 0;
     }
 
-    void OnHit(float dmg)
+    public void OnHit(float dmg)
     {
         hp -= dmg;
 
@@ -124,6 +127,14 @@ public class Enem : MonoBehaviour
 
         if(hp < 1)
         {
+            int ranItem = Random.Range(0, itemItems.Length);
+            if (itemItems[ranItem] != null)
+            {
+                GameObject item = GameManager.instance.objMana.MakeObj(itemItems[ranItem]);
+                item.transform.position = transform.position;
+            }
+
+            GameManager.instance.score += score;
             gameObject.SetActive(false);
         }
     }

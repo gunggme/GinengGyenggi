@@ -6,8 +6,9 @@ public class Player : MonoBehaviour
 {
     [Header("Player Stat")]
     [SerializeField] float speed;
-    [SerializeField] int hp;
-    [SerializeField] int power;
+    [SerializeField] public int hp;
+    [SerializeField] public int power;
+    public float fuer;
     [SerializeField]
     Transform[] firePosition;
 
@@ -20,11 +21,32 @@ public class Player : MonoBehaviour
     [SerializeField] SpriteRenderer spri;
 
     bool isHit;
+    bool isMZ;
+    Coroutine coru;
+
+    private void Start()
+    {
+        InvokeRepeating("FuerDown", 1, 1);
+    }
 
     private void Update()
     {
+        if(hp > 5)
+        {
+            hp = 5;
+            GameManager.instance.HPSet();
+        }
         Move();
         Shot();
+    }
+
+    void FuerDown()
+    {
+        fuer -= 5;
+        if(fuer < 1)
+        {
+            //게임 오버
+        }
     }
 
     void Move()
@@ -106,6 +128,7 @@ public class Player : MonoBehaviour
     void OnHit()
     {
         hp--;
+        GameManager.instance.HPSet();
         OnHitEffect();
         Invoke("ReturnColor", 1f);
 
@@ -129,6 +152,26 @@ public class Player : MonoBehaviour
         isHit = false;
     }
 
+    IEnumerator MZ()
+    {
+        isMZ = true;
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
+        OnHitEffect();
+        yield return new WaitForSeconds(1);
+        spri.color = new Color(1, 1, 1, 0.5f);
+        yield return wait;
+        spri.color = new Color(1, 1, 1, 1f);
+        yield return wait;
+        spri.color = new Color(1, 1, 1, 0.5f);
+        yield return wait;
+        spri.color = new Color(1, 1, 1, 1);
+        yield return wait;
+        spri.color = new Color(1, 1, 1, 0.5f);
+        yield return wait;
+        isMZ = false;
+        ReturnColor();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isHit)
@@ -146,6 +189,58 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Item"))
         {
+            Item item = collision.gameObject.GetComponent<Item>();
+            switch (item.itemName)
+            {
+                case "Coin":
+                    GameManager.instance.score += 1000;
+                    break;
+                case "Power":
+                    if(power < 4)
+                    {
+                        power = 4;
+                        GameManager.instance.score += 300;
+                    }
+                    else
+                    {
+                        power++;
+                    }
+                    break;
+                case "HP":
+                    if (hp < 5)
+                    {
+                        hp = 5;
+                        GameManager.instance.score += 300;
+                    }
+                    else
+                    {
+                        hp++;
+                        GameManager.instance.HPSet();
+                    }
+                    break;
+                case "Fuer":
+                    if (fuer < 100)
+                    {
+                        fuer = 4;
+                        GameManager.instance.score += 300;
+                    }
+                    else
+                    {
+                        fuer++;
+                    }
+                    break;
+                case "MZ":
+                    if (!isMZ)
+                    {
+                        coru = StartCoroutine("MZ");
+                    }
+                    else
+                    {
+                        StopCoroutine(coru);
+                        coru = StartCoroutine("MZ");
+                    }
+                    break;
+            }
             collision.gameObject.SetActive(false);
         }
     }
