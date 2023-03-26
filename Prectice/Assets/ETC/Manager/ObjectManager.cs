@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
+    [Header("Item")]
+    [SerializeField] GameObject coinPrefab;
+    [SerializeField] GameObject powerPrefab;
+    [SerializeField] GameObject hpPrefab;
+    [SerializeField] GameObject fuerPrefab;
+    [SerializeField] GameObject mzPrefab;
     [Header("Enem")]
     [SerializeField] GameObject enemSPrefab;
     [SerializeField] GameObject enemMPrefab;
@@ -20,6 +26,12 @@ public class ObjectManager : MonoBehaviour
     [SerializeField] GameObject playerBullet1Prefab;
     [SerializeField] GameObject playerBullet2Prefab;
 
+    //Item
+    GameObject[] coin;
+    GameObject[] power;
+    GameObject[] hp;
+    GameObject[] fuer;
+    GameObject[] mz;
     //Enem
     GameObject[] enemS;
     GameObject[] enemM;
@@ -38,6 +50,12 @@ public class ObjectManager : MonoBehaviour
 
     private void Awake()
     {
+        //Item
+        coin = new GameObject[20];
+        power = new GameObject[20];
+        fuer = new GameObject[20];
+        hp = new GameObject[20];
+        mz = new GameObject[20];
         //Enem
         enemS = new GameObject[20];
         enemM = new GameObject[20];
@@ -57,8 +75,34 @@ public class ObjectManager : MonoBehaviour
 
     void Gen()
     {
+        //Item
+        for(int i = 0; i < coin.Length; i++)
+        {
+            coin[i] = Instantiate(coinPrefab);
+            coin[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < power.Length; i++)
+        {
+            power[i] = Instantiate(powerPrefab);
+            power[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < hp.Length; i++)
+        {
+            hp[i] = Instantiate(hpPrefab);
+            hp[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < fuer.Length; i++)
+        {
+            fuer[i] = Instantiate(fuerPrefab);
+            fuer[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < mz.Length; i++)
+        {
+            mz[i] = Instantiate(mzPrefab);
+            mz[i].gameObject.SetActive(false);
+        }
         //Enem
-        for(int i = 0; i < enemS.Length; i++)
+        for (int i = 0; i < enemS.Length; i++)
         {
             enemS[i] = Instantiate(enemSPrefab);
             enemS[i].gameObject.SetActive(false);
@@ -116,6 +160,22 @@ public class ObjectManager : MonoBehaviour
     {
         switch (names)
         {
+            //Item
+            case "Coin":
+                targetPool = coin;
+                break;
+            case "Power":
+                targetPool = power;
+                break;
+            case "HP":
+                targetPool = hp;
+                break;
+            case "Fuer":
+                targetPool = fuer;
+                break;
+            case "MZ":
+                targetPool = mz;
+                break;
             //Enem
             case "EnemS":
                 targetPool = enemS;

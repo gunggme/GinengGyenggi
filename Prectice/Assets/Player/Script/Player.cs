@@ -6,9 +6,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Stat")]
-    [SerializeField] int hp;
+    [SerializeField] public int hp;
     [SerializeField] float speed;
     [SerializeField] int power;
+    [SerializeField] float fuer;
 
     [Header("Delay")]
     [SerializeField]
@@ -112,6 +113,7 @@ public class Player : MonoBehaviour
 
         OnHitEffect();
         Invoke("ReturnColor", 1);
+        GameManager.instance.HPSet();
     }
 
     void OnHitEffect()
@@ -128,7 +130,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isHit)
+        if (!isHit)
         {
             if(collision.gameObject.CompareTag("EnemBullet"))
             {
@@ -147,14 +149,45 @@ public class Player : MonoBehaviour
             switch (item.itemName)
             {
                 case "Coin":
+                    GameManager.instance.score += 1000;
                     break;
                 case "Power":
+                    if(power > 4)
+                    {
+                        power = 4;
+                        GameManager.instance.score += 300;
+                    }
+                    else
+                    {
+                        power++;
+                    }
                     break;
                 case "HP":
+                    if(hp > 5)
+                    {
+                        hp = 5;
+                        GameManager.instance.HPSet();
+                        GameManager.instance.score += 300;
+                    }
+                    else
+                    {
+                        hp++;
+                        GameManager.instance.HPSet();
+                    }
                     break;
                 case "Fuer":
+                    if(fuer > 100)
+                    {
+                        fuer = 100;
+                        GameManager.instance.score += 300;
+                    }
+                    else
+                    {
+                        fuer += 20;
+                    }
                     break;
                 case "MZ":
+                    //¹«Àû
                     break;
             }
             collision.gameObject.SetActive(false);

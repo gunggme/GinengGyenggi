@@ -13,9 +13,11 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] int ranTran;
 
+    public bool isSpawn;
+
     private void Awake()
     {
-        enemNames = new string[] { "EnemS", "EnemM", "EnemL", "Meteor1", "Meteor2" };
+        enemNames = new string[] { "EnemS", "Meteor1", "EnemS", "Meteor1", "EnemM", "Meteor1", "EnemS", "Meteor1", "EnemL", "Meteor1", "EnemS", "Meteor1", "Meteor2" };
     }
 
     private void Update()
@@ -25,15 +27,18 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnWait()
     {
-        if(curDelay < nextDelay)
+        if (isSpawn)
         {
-            curDelay += Time.deltaTime;
-            return;
-        }
+            if (curDelay < nextDelay)
+            {
+                curDelay += Time.deltaTime;
+                return;
+            }
 
-        Spawn();
-        curDelay = 0;
-        nextDelay = Random.Range(0.5f, 1.5f);
+            Spawn();
+            curDelay = 0;
+            nextDelay = Random.Range(0.9f, 1.5f);
+        }
     }
 
     void Spawn()

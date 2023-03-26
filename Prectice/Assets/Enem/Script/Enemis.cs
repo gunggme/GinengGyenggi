@@ -12,12 +12,19 @@ public class Enemis : MonoBehaviour
     [SerializeField] float maxDelay;
     public float speed;
     [SerializeField] float score;
-
+    
     [Header("ETC")]
     [SerializeField] SpriteRenderer spri;
+    [SerializeField] int ranItem;
+
+    string[] itemName;
 
     Transform playerT;
 
+    private void Awake()
+    {
+        itemName = new string[] { "Null", "Coin", "Fuer", "Power", "Fuer", "Fuer", "Null", "HP", "Null", "MZ" };
+    }
 
     private void OnEnable()
     {
@@ -30,13 +37,13 @@ public class Enemis : MonoBehaviour
                 score = 300;
                 break;
             case "M":
-                hp = 15;
+                hp = 13;
                 speed = 2;
                 maxDelay = 1.1f;
                 score = 400;
                 break;
             case "L":
-                hp = 20;
+                hp = 16;
                 speed = 1;
                 maxDelay = 1f;
                 score = 500;
@@ -120,10 +127,18 @@ public class Enemis : MonoBehaviour
 
         if(hp < 1)
         {
+            ranItem = Random.Range(0, itemName.Length);
+            if (itemName[ranItem] != "Null")
+            {
+                GameObject dir = GameManager.instance.objMana.MakeObj(itemName[ranItem]);
+                dir.transform.position = transform.position;
+            }
+            
             GameManager.instance.score += score;
             gameObject.SetActive(false);
         }
     }
+   
 
     void OnHitEffect()
     {
@@ -148,5 +163,8 @@ public class Enemis : MonoBehaviour
         {
             OnHit(9999);
         }
+
+        if (collision.gameObject.CompareTag("Border"))
+            gameObject.SetActive(false);
     }
 }
