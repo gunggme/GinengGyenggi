@@ -132,10 +132,25 @@ public class GameManager : MonoBehaviour
         switch (stageNum)
         {
             case 1:
-                Invoke("StageStart", 1);
+                if(playerS.hp > 0)
+                {
+                    Invoke("StageStart", 1);
+                }
+                else if(playerS.hp <= 0)
+                {
+                    StartCoroutine("GameOver");
+                }
+                
                 break;
             case 2:
-                Invoke("StageOver", 1);
+                if (playerS.hp > 0)
+                {
+                    StartCoroutine(Stage1Over());
+                }
+                else if (playerS.hp <= 0)
+                {
+                    StartCoroutine("GameOver");
+                }
                 break;
         }
     }
@@ -151,6 +166,18 @@ public class GameManager : MonoBehaviour
         stageText.gameObject.SetActive(false);
     }
 
+    IEnumerator GameOver()
+    {
+        stageText.text = "Game \n Over";
+        stageText.gameObject.SetActive(true);
+        Invoke("StageTextDown", 0.8f);
+        yield return new WaitForSeconds(0.8f);
+        curScore.text = "Score : " + score.ToString("N0");
+        bonusScore.text = "Score + " + (playerS.hp * 1000 + playerS.fuer * 100).ToString("N0");
+        timeText.text = "Time : " + Mathf.Round(timer / 10) * 10;
+        overView.SetTrigger("Open");
+    }
+
     public void HPSet()
     {
         switch (playerS.hp)
@@ -161,6 +188,7 @@ public class GameManager : MonoBehaviour
                 hpImage[2].color = new Color(1, 1, 1, 0);
                 hpImage[3].color = new Color(1, 1, 1, 0);
                 hpImage[4].color = new Color(1, 1, 1, 0);
+                StartCoroutine("GameOver");
                 break;
             case 1:
                 hpImage[0].color = new Color(1, 1, 1, 1);
