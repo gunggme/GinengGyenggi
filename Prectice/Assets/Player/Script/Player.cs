@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] public int hp;
     [SerializeField] float speed;
     [SerializeField] int power;
-    [SerializeField] float fuer;
+    [SerializeField] public float fuer;
 
     [Header("Delay")]
     [SerializeField]
@@ -20,11 +20,22 @@ public class Player : MonoBehaviour
     [Header("ETC")]
     [SerializeField] SpriteRenderer spri;
     [SerializeField] Sprite[] sprite;
+    public bool isDown;
 
     bool isHit;
+    bool isMZ;
+    Coroutine coru;
 
+    private void Start()
+    {
+        InvokeRepeating("FuerDown", 1, 1);
+    }
     private void Update()
     {
+        if(fuer > 100)
+        {
+            fuer = 100;
+        }
         Move();
         Shot();
     }
@@ -107,6 +118,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    void FuerDown()
+    {
+        if (isDown)
+        {
+            fuer -= 5;
+        }
+    }
+
     void OnHit()
     {
         hp--;
@@ -119,6 +138,7 @@ public class Player : MonoBehaviour
     void OnHitEffect()
     {
         spri.color = new Color(1, 1, 1, 0.6f);
+        gameObject.layer = 7;
         isHit = true;
     }
 
@@ -126,6 +146,27 @@ public class Player : MonoBehaviour
     {
         spri.color = new Color(1, 1, 1, 1);
         isHit = false;
+        gameObject.layer = 6;
+    }
+
+    IEnumerator MZ()
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
+        isMZ = true;
+        OnHitEffect();
+        yield return new WaitForSeconds(1);
+        spri.color = new Color(1, 1, 1, 1);
+        yield return wait;
+        spri.color = new Color(1, 1, 1, 0.6f);
+        yield return wait;
+        spri.color = new Color(1, 1, 1, 1);
+        yield return wait;
+        spri.color = new Color(1, 1, 1, 0.6f);
+        yield return wait;
+        spri.color = new Color(1, 1, 1, 1);
+        yield return wait;
+        isMZ = false;
+        ReturnColor();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -188,6 +229,15 @@ public class Player : MonoBehaviour
                     break;
                 case "MZ":
                     //¹«Àû
+                    if (!isMZ)
+                    {
+                        coru = StartCoroutine("MZ");
+                    }
+                    else if (isMZ)
+                    {
+                        StopCoroutine(coru);
+                        coru = StartCoroutine("MZ");
+                    }
                     break;
             }
             collision.gameObject.SetActive(false);
